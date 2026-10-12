@@ -70,6 +70,9 @@ function fail(message) {
 async function openBriefing() {
   const stored = localStorage.getItem("dv_key");
   if (!stored) return askKey();
+  // Start restoring the mobile viewport before hiding/replacing the focused form.
+  // Otherwise fixed controls in the briefing can inherit the keyboard inset.
+  if ($("keyform").contains(document.activeElement)) document.activeElement.blur();
   $("keyform").hidden = true; $("retry").hidden = true;
   $("msg").hidden = false; $("msg").textContent = "opening…";
 
@@ -103,3 +106,4 @@ openBriefing();
 </script>
 </body>
 </html>
+
